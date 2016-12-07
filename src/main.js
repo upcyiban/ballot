@@ -7,14 +7,14 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 import App from './App'
 import Main from './components/Main'
-import Hello from './components/Hello'
+import Index from './components/Index'
 /* eslint-disable no-new */
 
 const router =  new VueRouter({
 	mode : 'history',
 	routes : [{
 		path:'/',
-		component:Hello
+		component:Index
 	},{
 		path:'/foo',
 		component:Main

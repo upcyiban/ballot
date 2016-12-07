@@ -15,7 +15,8 @@
 		},
 		mounted() {
 			this.vq = this.$route.path;
-			this.$http.get('http://localhost:8086/ballot/getallballot').then(
+			let vq = this.$route.query.verify_request;
+			this.$http.get('http://localhost:8086/ballot/getallballot?vq='+vq).then(
 				(response)=>{
 					console.log(response);
 					this.string = response.data;
