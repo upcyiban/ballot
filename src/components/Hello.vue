@@ -5,7 +5,7 @@
 </template>
 
 <script>
-const appurl = require('../config').default.appurl;
+import {appurl} from '../config.js';
 export default {
     name: 'hello',
   data () {

@@ -1,4 +1,5 @@
-export default {
-	appurl:'http://localhost:8086'
+let appurl='http://localhost:8086';
 
-}
+
+
+export {appurl}
