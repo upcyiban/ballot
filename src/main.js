@@ -8,6 +8,8 @@ Vue.use(VueResource)
 import App from './App'
 import Main from './components/Main'
 import Index from './components/Index'
+import Create from './components/Create'
+import Mine from './components/Mine'
 /* eslint-disable no-new */
 
 const router =  new VueRouter({
@@ -16,8 +18,11 @@ const router =  new VueRouter({
 		path:'/',
 		component:Index
 	},{
-		path:'/foo',
-		component:Main
+		path:'/create',
+		component:Create
+	},{
+		path:'/mine',
+		components:Mine
 	},{
 		path:'*',
 		redirect:'/'
