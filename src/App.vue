@@ -1,18 +1,39 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view></router-view>
+    <div>{{vq}}</div>
     <router-link to="/foo">验证登陆</route-link>
-    <bar></bar>
+
   </div>
 </template>
 
 <script>
-import Bar from './components/Menu'
+import {appurl} from './config.js';
 export default {
-  name : 'app',
-  components : {
-    Bar
+    name: 'app',
+  data () {
+    return {
+      vq:'vq'
+    }
+  },
+  mounted(){
+    this.vq = this.$route.query.verify_request;
+    let verify_request = this.$route.query.verify_request;
+    if(!sessionStorage.getItem('islogin')){
+      if(!verify_request){
+        console.log('has not verify_request')
+        window.location="https://openapi.yiban.cn/oauth/authorize?client_id=484b6cb2a841acbd&redirect_uri=http://f.yiban.cn/iapp54363&display=html";
+      }
+      this.$http.get(appurl+'/ballot/auth?verify_request='+this.$route.query.verify_request).then((response)=>{
+      if(response.data==1){
+        sessionStorage.setItem('islogin', true);
+      }else{
+        sessionStorage.setItem('islogin', false);
+      }
+      console.log(sessionStorage.getItem('islogin'));
+    })
+    }
+
   }
 }
 </script>
@@ -22,6 +43,7 @@ html,body{
   margin: 0;
   padding: 0;
   height: 100%;
+  background: white; 
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
