@@ -10,13 +10,20 @@ import Main from './components/Main'
 import Index from './components/Index'
 import Create from './components/Create'
 import Mine from './components/Mine'
+import Auth from './components/Auth'
 /* eslint-disable no-new */
 
 const router =  new VueRouter({
 	mode : 'history',
 	routes : [{
 		path:'/',
-		component:Index
+		components:{
+			default:Index,
+			auth: Auth
+		}
+	},{
+		path:'/foo',
+		component:Main
 	},{
 		path:'/create',
 		component:Create
