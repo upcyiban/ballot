@@ -2,8 +2,6 @@
   <div id="app">
     <router-view></router-view>
     <router-view name="auth"></router-view>
-    <router-link to="/foo">验证登陆</router-link>
-
   </div>
 </template>
 
@@ -21,7 +19,7 @@ html,body{
   background: white; 
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Microsoft YaHei';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

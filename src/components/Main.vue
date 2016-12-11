@@ -14,9 +14,7 @@
 			}
 		},
 		mounted() {
-			this.vq = this.$route.path;
-			let vq = this.$route.query.verify_request;
-			this.$http.get('http://localhost:8086/ballot/getallballot?vq='+vq).then(
+			this.$http.get('http://localhost:8086/ballot/getallballot').then(
 				(response)=>{
 					console.log(response);
 					this.string = response.data;

@@ -1,3 +1,4 @@
+<template></template>
 <script>
 /**
 *   引入前端配置文件
