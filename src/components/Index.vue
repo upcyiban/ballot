@@ -8,6 +8,8 @@
     <button class="button" @click="DeleteTicket(ticket.id)">删除</button>
     </div>
     {{tickets}}
+    <router-link class="button" id="create-btn" to="/create"></router-link>
+    
   </div>
 </template>
 
@@ -46,6 +48,8 @@ export default {
   text-decoration: none;
   display: block;
   width: 50px;
+  height: 40px;
+  width: 40px;
   background: white;
   margin: 0 auto;
   padding:18px;

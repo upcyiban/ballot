@@ -12,6 +12,24 @@ export default {
   name: 'auth',
   mounted(){
     this.vq = this.$route.query.verify_request;
+=======
+<template>
+	<div id="auth">{{vq}}</div>
+</template>
+
+<script>
+import {APIURL,APPURL,APPID,CALLBACK} from '../config.js';
+export default {
+    name: 'auth',
+  data () {
+    return {
+      vq:'vq'
+    }
+  },
+  mounted(){
+    this.vq = this.$route.query.verify_request;
+    console.log(this.$route.fullPath);
+>>>>>>> 237e4738888294f1748ec6f36573d8097caf2056
     let verify_request = this.$route.query.verify_request;
     if(!sessionStorage.getItem('islogin')){
       if(!verify_request){
