@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {appurl} from './config.js';
+import {app_url,app_id,redirect_uri} from './config.js';
 export default {
     name: 'app',
   data () {
@@ -24,7 +24,7 @@ export default {
         console.log('has not verify_request')
         window.location="https://openapi.yiban.cn/oauth/authorize?client_id=484b6cb2a841acbd&redirect_uri=http://f.yiban.cn/iapp54363&display=html";
       }
-      this.$http.get(appurl+'/ballot/auth?verify_request='+this.$route.query.verify_request).then((response)=>{
+      this.$http.get(app_url+'/ballot/auth?verify_request='+this.$route.query.verify_request).then((response)=>{
       if(response.data==1){
         sessionStorage.setItem('islogin', true);
       }else{
