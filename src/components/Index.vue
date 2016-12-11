@@ -1,34 +1,28 @@
 <template>
   <div class="index">
-    <router-link class="button" id="create-btn" to="/create">发布我的抽签</router-link>
+    <router-link class="button" id="create-btn" to="/create"></router-link>
     <div class="ticket"><img src="../assets/logo.png" alt=""></div>
-    <div class="ticket"><img src="../assets/logo.png" alt=""></div>
-    <div class="ticket"><img src="../assets/logo.png" alt=""></div>
-    <div class="ticket"><img src="../assets/logo.png" alt=""></div>
-    <div class="ticket"><img src="../assets/logo.png" alt=""></div>
-    <div class="ticket"><img src="../assets/logo.png" alt=""></div>
-    <div class="ticket"><img src="../assets/logo.png" alt=""></div>
+    
   </div>
 </template>
 
 <script>
-import {appurl} from '../config.js';
 export default {
     name: 'index'
 }
 </script>
 
 <style>
-.button{
+#create-btn{
   text-decoration: none;
   display: block;
-  height: 20px;
-  width: 200px;
-  background: #1fc700;
+  height: 40px;
+  width: 40px;
+  background: white;
   margin: 0 auto;
   padding:18px;
-  box-shadow: gray 1px 1px 10px;
-  border-radius: 30px;
+  box-shadow: gainsboro 1px 10px 40px;
+  border-radius: 50%;
   font-size: 20px;
   color: white;
 }
@@ -42,8 +36,7 @@ export default {
 }
 #create-btn{
   position: fixed;
-  left: 0;
-  right: 0;
+  right: 20px;
   bottom: 20px;
 }
 </style>
