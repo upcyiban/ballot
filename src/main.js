@@ -6,11 +6,10 @@ import VueResource from 'vue-resource'
 Vue.use(VueRouter)
 Vue.use(VueResource)
 import App from './App'
-import Main from './components/Main'
 import Index from './components/Index'
 import Create from './components/Create'
-import Mine from './components/Mine'
 import Auth from './components/Auth'
+import Get from './components/Get'
 /* eslint-disable no-new */
 /**
 *	Vue 跨域
@@ -29,14 +28,11 @@ const router =  new VueRouter({
 			auth: Auth
 		}
 	},{
-		path:'/foo',
-		component:Main
-	},{
 		path:'/create',
 		component:Create
 	},{
-		path:'/mine',
-		components:Mine
+		path: '/get',
+		component:Get
 	},{
 		path:'*',
 		redirect:'/'

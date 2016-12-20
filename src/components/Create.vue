@@ -5,18 +5,19 @@
 			<form action="#" @submit.prevent="Create()" method="get">
 				<label for="num">人数:</label><label class="danger" v-show="!verify.num">人数不可为空</label><br>
 				<input type="number" name="num" v-model="ticket.num"><br>
-				<label for="detail">简介:</label><label class="danger" v-show="!verify.detail">简介不可为空</label><br>
+				<label for="detail">标题:</label><label class="danger" v-show="!verify.detail">标题不可为空</label><br>
 				<input type="text" name="detail" v-model="ticket.detail"><br>
 				<label for="deadline">截至日期:</label><label class="danger" v-show="!verify.deadline">截止日期不可为空</label><br>
-				<input type="number" name="deadline" v-model="ticket.deadline"><br><br>
+				<input type="date" name="deadline" v-model="ticket.deadline"><br><br>
 				<button class="button" id="submit">确定</button>
 			</form>
 		</div>
 		<div class="alert" v-show="toalert">
 		<br>
-			<h1>是否要继续发布</h1><br>
-			<button class="button" id="back" onclick="window.location='/'">返回列表</button><br><br>
-			<button class="button" id="continue" onclick="window.location='/create'">继续发布</button>
+			<h1 v-show="success">是否要继续发布</h1><br>
+			<button class="button" v-show="success" id="back" onclick="window.location='/'">返回列表</button><br><br>
+			<button class="button" v-show="success" id="continue" onclick="window.location='/create'">继续发布</button>
+			<div v-show="!success">请稍等</div>
 		</div>
 		</div>
 </template>
@@ -37,16 +38,19 @@ import {APIURL} from '../config';
 					detail : true,
 					deadline : true
 				},
-				toalert : false
+				toalert : false,
+				success : false
 			}
 		},
 		methods : {
 			Create : function () {
 				if(this.Check()){
 					let query = '?num='+this.ticket.num+'&detail='+this.ticket.detail+'&deadline='+this.ticket.deadline;
+					this.toalert = true;
 					this.$http.get(APIURL+'/ballot'+query).then(response=>{
 						if(response.data.id){
-							this.toalert = true;
+							this.success = true;
+							console.log('success');
 						}
 					})
 				};
@@ -75,7 +79,7 @@ import {APIURL} from '../config';
 		margin: 0 auto;
 	  	transition: all .3s;
 		height:50px;
-		width:60%;
+		width:75%;
 		background:blue;
 		border-radius: 30px;
 		color:white;
@@ -86,27 +90,35 @@ import {APIURL} from '../config';
 		border:none;
 	}
 	.button:hover{
-		background: red;
+		background: green;
 	}
 	form{
 		height: 300px;
 		width: 80%;
 		margin: 0 auto;
 	}
+	form>label{
+		font-size: 25px;
+	}
 	form>input{
+		margin-bottom:20px;
 		height: 35px;
-		width: 100%;
-		border-radius: 5px;
+		font-size: 25px;
+		width: 90%;
+		border-radius: 18px;
 		border: 2px solid blue;
 		box-shadow: gainsboro 1px 1px 10px;
 		outline: none;
-
+		opacity: .6;
+		padding-left: 20px;
 	}
+
 	form>input:focus{
 		height: 35px;
-		border-radius: 5px;
+		border-radius: 18px;
 		border: 2px solid blue;
 		box-shadow: gainsboro 1px 1px 10px;
+		opacity: .8;
 	}
 	#back:hover{
 		background: blue;

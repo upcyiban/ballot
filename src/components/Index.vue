@@ -3,10 +3,11 @@
     <router-link class="button" id="create-btn" to="/create">+</router-link>
     <h1 v-show="!tickets.length"><br>点击右下角按钮新建</h1>
     <div class="ticket" v-for="ticket in tickets">
-    <h1>我的抽签{{ticket.id}}</h1>
+    <h1>{{ticket.detail}}</h1>
     <img :src="ticket.picsrc"><br>
-    <dd>创建人:{{ticket.yibanName}}</dd>
-    <button class="button" @click="DeleteTicket(ticket.id)">删除</button>
+    <div class="detail">人数:{{ticket.num}}</div>
+    <div class="detail">截至日期:{{ticket.deadline}}</div>
+    <button class="button" id="delete-btn" @click="DeleteTicket(ticket.id)">删除</button>
     </div>
     <router-link class="button" id="create-btn" to="/create">+</router-link>
     
@@ -61,6 +62,15 @@ export default {
   background: yellow;
   font-size: 40px;
 }
+#delete-btn{
+  background: white;
+  border: 2px solid red;
+  color: red;
+}
+#delete-btn:hover{
+  background: red;
+  color: white;
+}
 .ticket{
   padding-top: 10px;
   height: 600px;
@@ -69,6 +79,12 @@ export default {
   background: white;
   border-radius: 10px;
   box-shadow: gainsboro 1px 1px 40px;
+}
+.ticket>.detail{
+  width: 250px;
+  margin: 10px auto;
+  text-align: left;
+  font-size: 30px
 }
 
 </style>
