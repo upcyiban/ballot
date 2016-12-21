@@ -10,7 +10,7 @@ import Index from './components/Index'
 import Create from './components/Create'
 import Auth from './components/Auth'
 import Get from './components/Get'
-/* eslint-disable no-new */
+import Status from './components/Status'
 /**
 *	Vue 跨域
 */
@@ -33,6 +33,9 @@ const router =  new VueRouter({
 	},{
 		path: '/get',
 		component:Get
+	},{
+		path: '/:id/status',
+		component:Status
 	},{
 		path:'*',
 		redirect:'/'

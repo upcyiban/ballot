@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+  <transition name="fade">
     <router-view></router-view>
+  </transition>
     <router-view name="auth"></router-view>
   </div>
 </template>
@@ -26,5 +28,13 @@ html,body{
   color: #2c3e50;
   padding: 0;
   margin: 0;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: all .5s;
+  transform: translate(0);
+}
+.fade-enter, .fade-leave {
+  transform: translateY(30px);
+  opacity: 0;
 }
 </style>

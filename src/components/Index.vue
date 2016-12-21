@@ -6,8 +6,8 @@
     <h1>{{ticket.detail}}</h1>
     <img :src="ticket.picsrc"><br>
     <div class="detail">人数:{{ticket.num}}</div>
-    <div class="detail">截至日期:{{ticket.deadline}}</div>
-    <button class="button" id="delete-btn" @click="DeleteTicket(ticket.id)">删除</button>
+    <div class="detail" style="font-size:20px">截至日期:<br>{{ticket.deadline}}</div>
+    <router-link class="button" id="toDetail" :to="'/'+ticket.id+'/status'">查看抽取情况</router-link>
     </div>
     <router-link class="button" id="create-btn" to="/create">+</router-link>
     
@@ -30,21 +30,26 @@ export default {
     methods : {
       Fetch : function () {
         this.$http.get(APIURL+'/ballot/getallballot').then(response=>{
-        this.tickets = response.data;
+        this.tickets = response.data.reverse();
+        this.FormatDate();
         console.log(this.tickets);
       })
       },
-      DeleteTicket : function (id) {
-        this.$http.get(APIURL+'/ballot/delete?id='+id).then(response=>{
-          console.log(response.data);
-          this.Fetch();
-        })
+      FormatDate : function () {
+        for(let i=0;i<this.tickets.length;i++){
+          let date = new Date(this.tickets[i].deadline);
+          date = date.getFullYear()+"年"+(date.getMonth()+1)+"月"+date.getDate()+"日"+date.getUTCHours()+"时"+date.getMinutes()+"分";
+          this.tickets[i].deadline = date;
+        }
       }
     }
 }
 </script>
 
 <style>
+#toDetail{
+  padding-top: 8px;
+}
 #create-btn{
   text-decoration: none;
   display: block;
@@ -73,7 +78,8 @@ export default {
 }
 .ticket{
   padding-top: 10px;
-  height: 600px;
+  padding-bottom: 30px;
+  height: auto;
   width: 95%;
   margin: 20px auto;
   background: white;
@@ -81,6 +87,9 @@ export default {
   box-shadow: gainsboro 1px 1px 40px;
 }
 .ticket>.detail{
+  overflow: visible;
+  word-break:keep-all;           
+  white-space:nowrap;          
   width: 250px;
   margin: 10px auto;
   text-align: left;

@@ -8,17 +8,19 @@
 				<label for="detail">标题:</label><label class="danger" v-show="!verify.detail">标题不可为空</label><br>
 				<input type="text" name="detail" v-model="ticket.detail"><br>
 				<label for="deadline">截至日期:</label><label class="danger" v-show="!verify.deadline">截止日期不可为空</label><br>
-				<input type="date" name="deadline" v-model="ticket.deadline"><br><br>
+				<input type="date" name="deadline" id="deadline" v-model="ticket.deadline"><br><br>
 				<button class="button" id="submit">确定</button>
 			</form>
 		</div>
-		<div class="alert" v-show="toalert">
+		<transition name="fade">
+			<div class="alert" v-show="toalert">
 		<br>
-			<h1 v-show="success">是否要继续发布</h1><br>
-			<button class="button" v-show="success" id="back" onclick="window.location='/'">返回列表</button><br><br>
-			<button class="button" v-show="success" id="continue" onclick="window.location='/create'">继续发布</button>
-			<div v-show="!success">请稍等</div>
+			<h1 v-show="success">发布成功</h1><br>
+			<router-link class="button" v-show="success" id="back" to="/index">返回列表</router-link><br><br>
+			<button class="button" v-show="success" id="continue" @click="Continue()">继续发布</button>
+			<div style="font-size:30px;" v-show="!success">请稍等</div>
 		</div>
+		</transition>
 		</div>
 </template>
 
@@ -45,7 +47,9 @@ import {APIURL} from '../config';
 		methods : {
 			Create : function () {
 				if(this.Check()){
-					let query = '?num='+this.ticket.num+'&detail='+this.ticket.detail+'&deadline='+this.ticket.deadline;
+					let deadline = new Date(document.getElementById('deadline').value).getTime();
+					console.log(deadline)
+					let query = '?num='+this.ticket.num+'&detail='+this.ticket.detail+'&deadline='+deadline;
 					this.toalert = true;
 					this.$http.get(APIURL+'/ballot'+query).then(response=>{
 						if(response.data.id){
@@ -65,6 +69,16 @@ import {APIURL} from '../config';
 				}else{
 					return false;
 				}
+			},
+			Continue : function () {
+				this.ticket.num = '';
+				this.ticket.detail = '';
+				this.ticket.deadline = '';
+				this.verify.num = true;
+				this.verify.detail = true;
+				this.verify.deadline = true;
+				this.toalert = false;
+				this.success = false;
 			}
 		}
 	}
@@ -76,6 +90,8 @@ import {APIURL} from '../config';
 		width: 100%;
 	}
 	.button{
+		display: block;
+		text-decoration: none;
 		margin: 0 auto;
 	  	transition: all .3s;
 		height:50px;
@@ -93,7 +109,6 @@ import {APIURL} from '../config';
 		background: green;
 	}
 	form{
-		height: 300px;
 		width: 80%;
 		margin: 0 auto;
 	}
@@ -119,6 +134,9 @@ import {APIURL} from '../config';
 		border: 2px solid blue;
 		box-shadow: gainsboro 1px 1px 10px;
 		opacity: .8;
+	}
+	#back{
+		padding-top: 10px;
 	}
 	#back:hover{
 		background: blue;
