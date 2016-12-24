@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {APIURL} from '../config'
+import {APIURL,APPURL} from '../config'
 export default {
     name: 'index',
     data () {
@@ -24,8 +24,9 @@ export default {
         id : ''
       }
     },
-    created () {
-      this.Fetch();
+    mounted () {
+        this.Redirect();
+        this.Fetch();
     },
     methods : {
       Fetch : function () {
@@ -34,6 +35,14 @@ export default {
         this.FormatDate();
         console.log(this.tickets);
       })
+      },
+      Redirect : function (){
+        if(sessionStorage.getItem('get_id')){
+          if(!isNaN(sessionStorage.getItem('get_id'))){
+            let id = sessionStorage.getItem('get_id');
+            window.location = APPURL+'get?id='+id;
+          }
+        }
       },
       FormatDate : function () {
         for(let i=0;i<this.tickets.length;i++){
@@ -76,11 +85,26 @@ export default {
   background: red;
   color: white;
 }
+@media screen and (max-width: 768px) {
+  .ticket{
+  width: 95%;
+}
+.alert{
+  width: 80%;
+}
+}
+@media screen and (min-width: 768px){
+  .ticket{
+    width: 500px;
+  }
+  .alert{
+    width: 300px;
+  }
+}
 .ticket{
   padding-top: 10px;
   padding-bottom: 30px;
   height: auto;
-  width: 95%;
   margin: 20px auto;
   background: white;
   border-radius: 10px;

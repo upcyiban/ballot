@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-  <transition name="fade">
     <router-view></router-view>
-  </transition>
-    <router-view name="auth"></router-view>
+    <auth></auth>
   </div>
 </template>
 
 <script>
+import Auth from './components/Auth'
 export default {
     name: 'app',
+    components:{Auth}
 }
 </script>
 
@@ -34,6 +34,7 @@ html,body{
   transform: translate(0);
 }
 .fade-enter, .fade-leave {
+  transition: all .5s;
   transform: translateY(30px);
   opacity: 0;
 }

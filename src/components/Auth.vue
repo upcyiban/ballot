@@ -14,22 +14,22 @@ export default {
     return {
     }
   },
-  mounted(){
+  created(){
 
     let verify_request = this.$route.query.verify_request;
+    console.log(verify_request);
     this.$http.get(APIURL+'/ballot/isauth').then(response=>{
         if(response.data==1){
-          console.log(response.data);
+          console.log(response.data+' auth success');
+        }else{     
+        if(!verify_request){
+          window.location="https://openapi.yiban.cn/oauth/authorize?client_id="+APPID+"&redirect_uri="+CALLBACK+"&display=html";
         }else{
-          
-      if(!verify_request){
-        window.location="https://openapi.yiban.cn/oauth/authorize?client_id="+APPID+"&redirect_uri="+CALLBACK+"&display=html";
-      }else{
-        this.$http.get(APIURL+'/ballot/auth?vq='+verify_request).then((response)=>{
-          if(response.data==1){
-            window.location=APPURL;
-          }
-    })
+          this.$http.get(APIURL+'/ballot/auth?vq='+verify_request).then((response)=>{
+            if(response.data==1){
+              window.location=APPURL;
+            }
+        })
       }
     
         }

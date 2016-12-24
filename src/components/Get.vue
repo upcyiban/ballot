@@ -19,18 +19,34 @@ import {APIURL} from '../config'
 			}
 		},
 		created () {
+			if(!sessionStorage.getItem('get_id')){
+				let id = this.$route.query.id;
+				sessionStorage.setItem('get_id',id);
+			}
 			let id = this.$route.query.id;
-			this.$http.get(APIURL+'/ballot/doballot?id='+id).then(response=>{
-				this.ticketNum = response.data.number;
-				if(response.data.code==-1){
+				this.$http.get(APIURL+'/ballot/doballot?id='+id).then(response=>{
+					console.log(response.data);
+					if(response.data.code==-1){
 					this.ticketNum = response.data.message;
-					this.title = "对不起"
-				}
-			},response=>{
-				this.show = false;
-				this.message = "没有找到所对应的抽签";
-					this.title = "对不起"
-			})
+					this.title = "对不起";
+					if (response.data.message != '没有登陆') {
+						console.log('没有登陆');
+						sessionStorage.removeItem('get_id');
+					}else{
+						this.ticketNum = '需要易班认证';
+					}
+					}else{
+						this.ticketNum = response.data.number;
+						sessionStorage.removeItem('get_id');
+					}
+				},response=>{
+					this.show = false;
+					this.message = "没有找到所对应的抽签";
+					this.title = "对不起";
+					sessionStorage.removeItem('get_id');
+				})
+			
+			
 		}
 	}
 </script>

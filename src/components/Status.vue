@@ -1,10 +1,11 @@
 <template>
 	<div class="status">
 		<div class="ticket" v-show="!toalert&&!success">
-			<h1>已抽签
-			<span style="color:green">{{count}}</span>/
-			<span style="color:blue">{{tickets.length}}</span></h1>
-			<div class="detail" v-for="ticket in tickets">{{ticket.ybname}}:{{ticket.number}}</div>
+			<h1>
+			{{title}}(
+			<span style="color:#00FF00">{{count}}</span>/
+			<span style="color:blue">{{tickets.length}}</span>)</h1>
+			<div class="detail" v-for="ticket in tickets" v-show="ticket.ybname">{{ticket.ybname}}:{{ticket.number}}</div>
 		<button class="button" id="delete-btn" @click="DeleteTicket()">删除</button>
 		</div>
 		<transition name="fade">
@@ -18,13 +19,15 @@
 	</div>
 </template>
 <script>
-import {APIURL} from '../config'
+import {APIURL,APPDIR} from '../config'
 	export default {
 		name : 'status',
 		data () {
 			return {
 				tickets:[],
 				count : '',
+				title : '',
+				APPDIR:APPDIR,
 				toalert: false,
 				success:false
 			}
@@ -56,9 +59,13 @@ import {APIURL} from '../config'
 					console.log(response.data);
 					this.tickets = response.data;
 					this.count = this.countIsGet(this.tickets);
+					this.title = this.tickets[0].ballot.detail;
 			},response=>{
 				alert('获取失败');
 			})
 		}
 	}
 </script>
+<style>
+	
+</style>

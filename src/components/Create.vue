@@ -3,11 +3,11 @@
 		<div class="ticket" id="ticket">
 			<h1>创建抽签</h1>
 			<form action="#" @submit.prevent="Create()" method="get">
-				<label for="num">人数:</label><label class="danger" v-show="!verify.num">人数不可为空</label><br>
+				<label for="num">人数:</label><br><label class="danger" v-show="!verify.num">人数不可为空</label><br>
 				<input type="number" name="num" v-model="ticket.num"><br>
-				<label for="detail">标题:</label><label class="danger" v-show="!verify.detail">标题不可为空</label><br>
+				<label for="detail">标题:</label><br><label class="danger" v-show="!verify.detail">标题不可为空</label><br>
 				<input type="text" name="detail" v-model="ticket.detail"><br>
-				<label for="deadline">截至日期:</label><label class="danger" v-show="!verify.deadline">截止日期不可为空</label><br>
+				<label for="deadline">截至日期:</label><br><label class="danger" v-show="!verify.deadline">截止日期不可为空</label><br>
 				<input type="date" name="deadline" id="deadline" v-model="ticket.deadline"><br><br>
 				<button class="button" id="submit">确定</button>
 			</form>
@@ -106,7 +106,7 @@ import {APIURL} from '../config';
 		border:none;
 	}
 	.button:hover{
-		background: green;
+		background: #00CD00;
 	}
 	form{
 		width: 80%;
@@ -146,6 +146,10 @@ import {APIURL} from '../config';
 		background: white;
 		color: blue;
 	}
+	#continue:hover{
+		background: blue;
+		color: white;
+	}
 	label{
 		float: left;
 	}
@@ -156,7 +160,6 @@ import {APIURL} from '../config';
 		z-index: 10;
 		position: fixed;
 		height: 300px;
-		width: 80%;
 		margin: auto;
 		top: 20%;
 		left: 0;

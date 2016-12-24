@@ -8,7 +8,6 @@ Vue.use(VueResource)
 import App from './App'
 import Index from './components/Index'
 import Create from './components/Create'
-import Auth from './components/Auth'
 import Get from './components/Get'
 import Status from './components/Status'
 /**
@@ -20,13 +19,10 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 const router =  new VueRouter({
-	mode : 'history',
+	// mode : 'history',
 	routes : [{
 		path:'/',
-		components:{
-			default:Index,
-			auth: Auth
-		}
+		component:Index
 	},{
 		path:'/create',
 		component:Create
