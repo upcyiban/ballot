@@ -55,7 +55,7 @@ export default {
           this.$http.get(APIURL+'/ballot/auth?vq='+verify_request).then((response)=>{
             if(response.data==1){
               this.Fetch();
-              location.hash = String(APPURL).replace('/#/','');
+              location.hash = '';
             }
         })
       }
