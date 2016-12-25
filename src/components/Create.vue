@@ -1,27 +1,29 @@
 <template>
-		<div id="create">
-		<div class="ticket" id="ticket">
-			<h1>创建抽签</h1>
-			<form action="#" @submit.prevent="Create()" method="get">
-				<label for="num">人数:</label><br><label class="danger" v-show="!verify.num">人数不可为空</label><br>
-				<input type="number" name="num" v-model="ticket.num"><br>
-				<label for="detail">标题:</label><br><label class="danger" v-show="!verify.detail">标题不可为空</label><br>
-				<input type="text" name="detail" v-model="ticket.detail"><br>
-				<label for="deadline">截至日期:</label><br><label class="danger" v-show="!verify.deadline">截止日期不可为空</label><br>
-				<input type="date" name="deadline" id="deadline" v-model="ticket.deadline"><br><br>
-				<button class="button" id="submit">确定</button>
-			</form>
-		</div>
-		<transition name="fade">
-			<div class="alert" v-show="toalert">
-		<br>
-			<h1 v-show="success">发布成功</h1><br>
-			<router-link class="button" v-show="success" id="back" to="/index">返回列表</router-link><br><br>
-			<button class="button" v-show="success" id="continue" @click="Continue()">继续发布</button>
-			<div style="font-size:30px;" v-show="!success">请稍等</div>
-		</div>
-		</transition>
-		</div>
+    <div id="create">
+        <div class="ticket" id="ticket">
+            <h1>创建抽签</h1>
+            <form action="#" @submit.prevent="Create()" method="get">
+                <label for="num">人数:</label><br><label class="danger" v-show="!verify.num">人数不可为空</label><br>
+                <input type="number" name="num" v-model="ticket.num"><br>
+                <label for="detail">标题:</label><br><label class="danger" v-show="!verify.detail">标题不可为空</label><br>
+                <input type="text" name="detail" v-model="ticket.detail"><br>
+                <label for="deadline">截至日期:</label><br><label class="danger"
+                                                              v-show="!verify.deadline">截止日期不可为空</label><br>
+                <input type="date" name="deadline" id="deadline" v-model="ticket.deadline"><br><br>
+                <button class="button" id="submit">确定</button>
+            </form>
+        </div>
+        <transition name="fade">
+            <div class="alert" v-show="toalert">
+                <br>
+                <h1 v-show="success">发布成功</h1><br>
+                <router-link class="button" v-show="success" id="back" to="/index">返回列表</router-link>
+                <br><br>
+                <button class="button" v-show="success" id="continue" @click="Continue()">继续发布</button>
+                <div style="font-size:30px;" v-show="!success">请稍等</div>
+            </div>
+        </transition>
+    </div>
 </template>
 
 <script>
@@ -46,6 +48,7 @@ import {APIURL} from '../config';
 		},
 		methods : {
 			Create : function () {
+			    this.CheckAuth();
 				if(this.Check()){
 					let deadline = new Date(document.getElementById('deadline').value).getTime();
 					console.log(deadline)
@@ -59,6 +62,17 @@ import {APIURL} from '../config';
 					})
 				};
 				
+			},
+			CheckAuth:function (){
+				this.$http.get(APIURL+'/ballot/isauth').then(response=>{
+        if(response.data==1){
+          console.log(response.data+' auth success');
+        }else{
+        if(!verify_request){
+          window.location="https://openapi.yiban.cn/oauth/authorize?client_id="+APPID+"&redirect_uri="+CALLBACK+"&display=html";
+        }
+        }
+    });
 			},
 			Check : function () {
 				if(!this.ticket.num){this.verify.num=false}
@@ -82,6 +96,7 @@ import {APIURL} from '../config';
 			}
 		}
 	}
+
 </script>
 
 <style>
@@ -159,8 +174,9 @@ import {APIURL} from '../config';
 	.alert{
 		z-index: 10;
 		position: fixed;
-		height: 300px;
+		height: auto;
 		margin: auto;
+		padding-bottom: 40px;
 		top: 20%;
 		left: 0;
 		right: 0;
@@ -168,4 +184,5 @@ import {APIURL} from '../config';
 		border-radius: 5px;
 		background: white;
 	}
+
 </style>

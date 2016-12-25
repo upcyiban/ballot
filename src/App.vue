@@ -1,15 +1,12 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <auth></auth>
   </div>
 </template>
 
 <script>
-import Auth from './components/Auth'
 export default {
-    name: 'app',
-    components:{Auth}
+    name: 'app'
 }
 </script>
 

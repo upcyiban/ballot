@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {APIURL} from '../config'
+import {APIURL,APPID,CALLBACK} from '../config'
 	export default {
 		name:'get',
 		data () {
@@ -33,9 +33,13 @@ import {APIURL} from '../config'
 						console.log('没有登陆');
 						sessionStorage.removeItem('get_id');
 					}else{
-						this.ticketNum = '需要易班认证';
+						this.show = false;
+						this.title = '请稍后';
+						this.message = '正在跳转至易班认证';
+						window.location="https://openapi.yiban.cn/oauth/authorize?client_id="+APPID+"&redirect_uri="+CALLBACK+"&display=html";
 					}
 					}else{
+						this.show = true;
 						this.ticketNum = response.data.number;
 						sessionStorage.removeItem('get_id');
 					}
@@ -45,8 +49,8 @@ import {APIURL} from '../config'
 					this.title = "对不起";
 					sessionStorage.removeItem('get_id');
 				})
-			
-			
+
+
 		}
 	}
 </script>

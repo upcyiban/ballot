@@ -9,7 +9,7 @@
 		<button class="button" id="delete-btn" @click="DeleteTicket()">删除</button>
 		</div>
 		<transition name="fade">
-			<div class="alert" v-show="toalert">
+			<div class="alert" style="padding-bottom:0px" v-show="toalert">
 		<br>
 			<h1 v-show="success">删除成功</h1><br>
 			<router-link class="button" v-show="success" id="back" to="/index">返回列表</router-link><br><br>
@@ -50,6 +50,8 @@ import {APIURL,APPDIR} from '../config'
           			this.toalert = true;
           			this.success = true;
           		}
+        	},response=>{
+        		alert(response.data.message);
         	})
       		},
 		},
@@ -67,5 +69,4 @@ import {APIURL,APPDIR} from '../config'
 	}
 </script>
 <style>
-	
 </style>

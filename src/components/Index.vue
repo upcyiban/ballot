@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {APIURL,APPURL} from '../config'
+import {APIURL,APPURL,APPID,CALLBACK} from '../config'
 export default {
     name: 'index',
     data () {
@@ -26,14 +26,13 @@ export default {
     },
     mounted () {
         this.Redirect();
-        this.Fetch();
+        this.AfterAuth();
     },
     methods : {
       Fetch : function () {
         this.$http.get(APIURL+'/ballot/getallballot').then(response=>{
         this.tickets = response.data.reverse();
         this.FormatDate();
-        console.log(this.tickets);
       })
       },
       Redirect : function (){
@@ -43,6 +42,26 @@ export default {
             window.location = APPURL+'get?id='+id;
           }
         }
+      },
+      AfterAuth: function () {
+        let verify_request = this.$route.query.verify_request;
+    this.$http.get(APIURL+'/ballot/isauth').then(response=>{
+        if(response.data==1){
+          this.Fetch();
+        }else{     
+        if(!verify_request){
+          window.location="https://openapi.yiban.cn/oauth/authorize?client_id="+APPID+"&redirect_uri="+CALLBACK+"&display=html";
+        }else{
+          this.$http.get(APIURL+'/ballot/auth?vq='+verify_request).then((response)=>{
+            if(response.data==1){
+              this.Fetch();
+              location.hash = APPURL.replace('/#/','');
+            }
+        })
+      }
+    
+        }
+    });
       },
       FormatDate : function () {
         for(let i=0;i<this.tickets.length;i++){
