@@ -9,7 +9,7 @@
                 <input type="text" name="detail" v-model="ticket.detail"><br>
                 <label for="deadline">截至日期:</label><br><label class="danger"
                                                               v-show="!verify.deadline">截止日期不可为空</label><br>
-                <input type="date" name="deadline" id="deadline" v-model="ticket.deadline"><br><br>
+                <input type="datetime-local" name="deadline" id="deadline" v-model="ticket.deadline"><br><br>
                 <button class="button" id="submit">确定</button>
             </form>
         </div>
@@ -50,6 +50,7 @@ import {APIURL} from '../config';
 			Create : function () {
 			    this.CheckAuth();
 				if(this.Check()){
+					console.log(document.getElementById('deadline').value)
 					let deadline = new Date(document.getElementById('deadline').value).getTime();
 					console.log(deadline)
 					let query = '?num='+this.ticket.num+'&detail='+this.ticket.detail+'&deadline='+deadline;
